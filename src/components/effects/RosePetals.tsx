@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 
 interface Petal {
   id: number;
@@ -11,8 +12,8 @@ interface Petal {
 
 const PETAL_COLORS = ['#E9A5B3', '#F5C6D0', '#D9A06F', '#F6E7D8', '#C8748A'];
 
-export function RosePetals() {
-  const petals: Petal[] = Array.from({ length: 18 }, (_, i) => ({
+function generatePetals(): Petal[] {
+  return Array.from({ length: 18 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     size: Math.random() * 14 + 8,
@@ -21,6 +22,10 @@ export function RosePetals() {
     rotation: Math.random() * 360,
     color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)],
   }));
+}
+
+export function RosePetals() {
+  const petals = useMemo(() => generatePetals(), []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">

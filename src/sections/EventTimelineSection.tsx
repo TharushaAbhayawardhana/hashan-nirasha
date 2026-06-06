@@ -4,8 +4,8 @@ import { weddingDayTimeline } from '../data/timelineData';
 
 export function EventTimelineSection() {
   return (
-    <section id="timeline" className="py-24 md:py-32 px-6 relative overflow-hidden">
-      <div className="max-w-2xl mx-auto">
+    <section id="timeline" className="section-padding relative overflow-hidden">
+      <div className="max-w-3xl lg:max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="The Day's Schedule"
           title="Day Of"

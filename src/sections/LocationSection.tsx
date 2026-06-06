@@ -13,8 +13,8 @@ const locationDetails = [
 
 export function LocationSection() {
   return (
-    <section id="location" className="py-24 md:py-32 px-6 bg-[#FFF0F3] relative overflow-hidden">
-      <div className="max-w-5xl mx-auto">
+    <section id="location" className="section-padding bg-[#FFF0F3] relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="Find Us"
           title="The"
@@ -22,7 +22,7 @@ export function LocationSection() {
           subtitle="Come find us at one of Sri Lanka's most breathtaking wedding venues"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Map placeholder (styled) */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}

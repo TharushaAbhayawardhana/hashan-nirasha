@@ -23,7 +23,7 @@ export function CountdownCard({ value, label, delay = 0 }: CountdownCardProps) {
       transition={{ duration: 0.7, delay, ease: 'easeOut' }}
       className="flex flex-col items-center"
     >
-      <div className="glass rounded-3xl p-6 md:p-8 w-28 md:w-36 text-center relative overflow-hidden group hover:shadow-[0_20px_60px_rgba(233,165,179,0.3)] transition-shadow duration-500">
+      <div className="glass rounded-3xl p-6 md:p-8 w-24 xs:w-28 sm:w-36 text-center relative overflow-hidden group hover:shadow-[0_20px_60px_rgba(233,165,179,0.3)] transition-shadow duration-500">
         {/* Background glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#FFF0F3] to-[#F6E7D8] opacity-60 rounded-3xl" />
 

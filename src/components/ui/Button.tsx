@@ -26,18 +26,18 @@ export function Button({
     'inline-flex items-center justify-center gap-2 font-inter font-medium tracking-widest uppercase rounded-full transition-all duration-300 cursor-pointer select-none';
 
   const sizes = {
-    sm: 'px-6 py-2 text-xs',
-    md: 'px-8 py-3 text-xs',
-    lg: 'px-12 py-4 text-sm',
+    sm: 'px-5 sm:px-6 py-2.5 text-xs',
+    md: 'px-6 sm:px-8 py-3 text-xs',
+    lg: 'px-8 sm:px-10 lg:px-12 py-3.5 sm:py-4 text-xs sm:text-sm',
   };
 
   const variants = {
     primary:
-      'bg-[#2F2430] text-white hover:bg-[#C8748A] hover:shadow-[0_8px_30px_rgba(200,116,138,0.4)] active:scale-95',
+      'bg-[#2F2430] text-white hover:bg-[#C8748A] hover:shadow-[0_8px_30px_rgba(200,116,138,0.4)] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8748A]',
     secondary:
-      'border border-[#E9A5B3] text-[#C8748A] hover:bg-[#E9A5B3] hover:text-white active:scale-95',
+      'border border-[#E9A5B3] text-[#C8748A] hover:bg-[#E9A5B3] hover:text-white active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8748A]',
     ghost:
-      'text-[#72646A] hover:text-[#2F2430] underline-offset-4 hover:underline active:scale-95',
+      'text-[#72646A] hover:text-[#2F2430] underline-offset-4 hover:underline active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8748A]',
   };
 
   const classes = `${base} ${sizes[size]} ${variants[variant]} ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;

@@ -3,14 +3,14 @@ import { COUPLE } from '../../data/weddingData';
 
 export function Footer() {
   return (
-    <footer className="bg-[#2F2430] text-white py-16 relative overflow-hidden">
+    <footer className="bg-[#2F2430] text-white py-20 lg:py-24 relative overflow-hidden">
       {/* Background rose pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-64 h-64 rounded-full border-2 border-white -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full border-2 border-white translate-x-1/2 translate-y-1/2" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="flex justify-center items-center gap-3 mb-4">
           <Heart size={14} className="text-[#E9A5B3] fill-[#E9A5B3]" />
           <Heart size={20} className="text-[#E9A5B3] fill-[#E9A5B3]" />

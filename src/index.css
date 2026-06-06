@@ -15,13 +15,83 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 body {
   background-color: var(--bg);
   color: var(--deep);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+}
+
+/* === Shared Container System === */
+.section-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .section-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.section-container--narrow {
+  max-width: 56rem;
+}
+.section-container--medium {
+  max-width: 64rem;
+}
+.section-container--wide {
+  max-width: 72rem;
+}
+.section-container--form {
+  max-width: 42rem;
+}
+.section-container--text {
+  max-width: 48rem;
+}
+.section-container--hero {
+  max-width: 56rem;
+}
+
+/* === Section Spacing === */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* === Luxury Typography Helpers === */
+.max-readable {
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.max-readable-wide {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .font-playfair { font-family: 'Playfair Display', serif; }

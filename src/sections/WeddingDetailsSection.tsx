@@ -31,10 +31,10 @@ const details = [
 
 export function WeddingDetailsSection() {
   return (
-    <section id="details" className="py-24 md:py-32 px-6 bg-[#FFF0F3] relative overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E9A5B3] to-transparent opacity-30" />
+    <section id="details" className="section-padding bg-[#FFF0F3] relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E9A5B3] to-transparent opacity-30" aria-hidden="true" />
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="The Details"
           title="Wedding"
@@ -72,7 +72,7 @@ export function WeddingDetailsSection() {
                 Thursday, September 24, 2026
               </span>
             </div>
-            <p className="font-inter text-sm text-[#72646A] leading-relaxed">
+            <p className="font-inter text-sm md:text-base text-[#72646A] leading-relaxed max-readable">
               Join us for a magical day filled with love, laughter, and beautiful memories at one of
               Sri Lanka's most stunning wedding venues. Dress code is formal attire in soft, muted
               colours — please avoid wearing white.
@@ -81,7 +81,7 @@ export function WeddingDetailsSection() {
         </motion.div>
 
         {/* Time cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {details.map((detail, i) => (
             <GlassCard key={detail.title} delay={i * 0.1} className="text-center">
               <div

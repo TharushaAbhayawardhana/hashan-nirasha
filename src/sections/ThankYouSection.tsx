@@ -6,8 +6,8 @@ import { COUPLE } from '../data/weddingData';
 
 export function ThankYouSection() {
   return (
-    <section className="py-24 md:py-32 px-6 relative overflow-hidden">
-      <div className="max-w-3xl mx-auto text-center">
+    <section className="section-padding relative overflow-hidden">
+      <div className="max-w-3xl lg:max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <AnimatedDivider />
 
         <motion.div
@@ -24,12 +24,12 @@ export function ThankYouSection() {
             Thank <em className="italic text-gradient-rose">You</em>
           </h2>
 
-          <p className="font-cormorant text-2xl md:text-3xl text-[#72646A] italic leading-relaxed mb-8">
+          <p className="font-cormorant text-xl sm:text-2xl md:text-3xl text-[#72646A] italic leading-relaxed mb-10 max-readable">
             For being a part of our love story. Your presence, love, and support mean the world 
             to us as we begin this beautiful journey together.
           </p>
 
-          <div className="glass rounded-3xl p-8 md:p-12 mb-10">
+          <div className="glass rounded-3xl p-8 sm:p-10 lg:p-14 mb-12">
             <div className="flex justify-center items-center gap-3 mb-6">
               {[...Array(7)].map((_, i) => (
                 <motion.div

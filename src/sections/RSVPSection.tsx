@@ -31,9 +31,9 @@ function InputField({
   children: ReactNode;
 }) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1.5">
       <label className="flex items-center gap-2 font-inter text-xs tracking-[0.15em] uppercase text-[#72646A]">
-        <span className="text-[#E9A5B3]">{icon}</span>
+        <span className="text-[#E9A5B3]" aria-hidden="true">{icon}</span>
         {label}
       </label>
       {children}
@@ -42,6 +42,7 @@ function InputField({
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
           className="font-inter text-xs text-[#C8748A]"
+          role="alert"
         >
           {error}
         </motion.p>
@@ -51,7 +52,7 @@ function InputField({
 }
 
 const inputClass =
-  'w-full bg-white/60 border border-[#F5C6D0] rounded-2xl px-4 py-3 font-inter text-sm text-[#2F2430] placeholder-[#72646A]/50 focus:outline-none focus:border-[#E9A5B3] focus:ring-2 focus:ring-[#E9A5B3]/20 transition-all duration-300';
+  'w-full bg-white/60 border border-[#F5C6D0] rounded-2xl px-4 py-3.5 font-inter text-sm text-[#2F2430] placeholder-[#72646A]/50 focus:outline-none focus:border-[#E9A5B3] focus:ring-2 focus:ring-[#E9A5B3]/20 hover:border-[#E9A5B3]/60 transition-all duration-300';
 
 export function RSVPSection() {
   const [submitted, setSubmitted] = useState(false);
@@ -71,10 +72,10 @@ export function RSVPSection() {
   };
 
   return (
-    <section id="rsvp" className="py-24 md:py-32 px-6 relative overflow-hidden bg-[#2F2430]">
+    <section id="rsvp" className="section-padding relative overflow-hidden bg-[#2F2430]">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(233,165,179,0.08),transparent)]" />
 
-      <div className="max-w-2xl mx-auto relative z-10">
+      <div className="max-w-2xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="Join Our Celebration"
           title="RSVP"
@@ -123,7 +124,7 @@ export function RSVPSection() {
             <motion.form
               key="form"
               onSubmit={handleSubmit(onSubmit)}
-              className="glass rounded-3xl p-6 md:p-10 space-y-6"
+              className="glass rounded-3xl p-6 sm:p-8 lg:p-12 space-y-8"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <InputField label="Your Name" error={errors.name?.message} icon={<User size={12} />}>

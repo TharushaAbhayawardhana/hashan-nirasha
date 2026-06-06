@@ -23,7 +23,7 @@ export function SectionTitle({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
-      className={`mb-16 ${centered ? 'text-center' : ''}`}
+      className={`mb-12 lg:mb-16 ${centered ? 'text-center' : ''}`}
     >
       {eyebrow && (
         <p
@@ -35,7 +35,7 @@ export function SectionTitle({
         </p>
       )}
       <h2
-        className={`font-playfair text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight ${
+        className={`font-playfair text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight ${
           light ? 'text-white' : 'text-[#2F2430]'
         }`}
       >
@@ -49,7 +49,7 @@ export function SectionTitle({
       </h2>
       {subtitle && (
         <p
-          className={`font-cormorant text-xl md:text-2xl mt-4 leading-relaxed ${
+          className={`font-cormorant text-lg sm:text-xl md:text-2xl mt-4 sm:mt-5 leading-relaxed max-readable-wide ${
             light ? 'text-[#F5C6D0]' : 'text-[#72646A]'
           }`}
         >

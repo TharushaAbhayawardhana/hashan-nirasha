@@ -10,6 +10,14 @@ import { Home } from './pages/Home';
 import { Heart } from 'lucide-react';
 
 function LoadingScreen({ onDone }: { onDone: () => void }) {
+  // Keyboard support: skip loading on Enter/Space
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Enter' || e.key === ' ') onDone();
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onDone]);
   useEffect(() => {
     const t = setTimeout(onDone, 2600);
     return () => clearTimeout(t);

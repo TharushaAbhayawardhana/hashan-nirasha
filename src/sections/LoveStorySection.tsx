@@ -13,11 +13,11 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export function LoveStorySection() {
   return (
-    <section id="story" className="py-24 md:py-32 px-6 relative overflow-hidden">
+    <section id="story" className="section-padding relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E9A5B3] to-transparent opacity-40" />
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="How It All Began"
           title="Our Love"
@@ -49,20 +49,20 @@ export function LoveStorySection() {
                     <motion.div
                       whileHover={{ y: -4, boxShadow: '0 20px 50px rgba(233,165,179,0.2)' }}
                       transition={{ duration: 0.4 }}
-                      className={`glass rounded-3xl p-6 md:p-8 relative ${
+                      className={`glass rounded-3xl p-8 lg:p-10 relative ${
                         isLeft ? 'md:text-right' : 'md:text-left'
                       }`}
                     >
-                      <span className="font-inter text-xs tracking-[0.2em] uppercase text-[#C8748A] block mb-2">
+                      <span className="font-inter text-xs tracking-[0.2em] uppercase text-[#C8748A] block mb-3">
                         {event.date}
                       </span>
-                      <h3 className="font-playfair text-2xl font-semibold text-[#2F2430] mb-3">
+                      <h3 className="font-playfair text-2xl lg:text-3xl font-semibold text-[#2F2430] mb-4">
                         {event.title}
                       </h3>
-                      <p className="font-inter text-sm leading-relaxed text-[#72646A]">
+                      <p className="font-inter text-sm md:text-base leading-relaxed text-[#72646A] max-readable">
                         {event.description}
                       </p>
-                      <div className={`mt-4 text-3xl ${isLeft ? 'md:flex md:justify-end' : ''}`}>
+                      <div className={`mt-6 text-3xl ${isLeft ? 'md:flex md:justify-end' : ''}`}>
                         {event.emoji}
                       </div>
                     </motion.div>

@@ -27,7 +27,7 @@ export function GlassCard({
           ? { y: -6, boxShadow: '0 24px 60px rgba(233,165,179,0.25)' }
           : {}
       }
-      className={`rounded-3xl p-6 md:p-8 transition-all duration-500 ${
+      className={`rounded-3xl p-8 lg:p-10 transition-all duration-500 ${
         dark ? 'glass-dark' : 'glass'
       } ${className}`}
     >

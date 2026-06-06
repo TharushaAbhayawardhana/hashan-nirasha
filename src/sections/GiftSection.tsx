@@ -29,8 +29,8 @@ const giftOptions = [
 
 export function GiftSection() {
   return (
-    <section className="py-24 md:py-32 px-6 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto">
+    <section className="section-padding relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="Gifts & Registry"
           title="Gift"
@@ -38,7 +38,7 @@ export function GiftSection() {
           subtitle="Your presence is the greatest present of all"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {giftOptions.map((gift, i) => (
             <GlassCard key={gift.title} delay={i * 0.1} className="text-center">
               <div
@@ -65,7 +65,7 @@ export function GiftSection() {
           transition={{ duration: 0.8 }}
           className="glass rounded-3xl p-8 text-center"
         >
-          <p className="font-cormorant text-2xl text-[#72646A] italic max-w-2xl mx-auto">
+          <p className="font-cormorant text-xl sm:text-2xl text-[#72646A] italic max-readable">
             "We are so grateful for your love and support as we begin this new chapter together. 
             Your presence on our special day is the greatest gift we could ever receive."
           </p>

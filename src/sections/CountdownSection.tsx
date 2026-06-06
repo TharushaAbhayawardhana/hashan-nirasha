@@ -8,15 +8,15 @@ export function CountdownSection() {
   const { days, hours, minutes, seconds, isExpired } = useCountdown(WEDDING_DATE);
 
   return (
-    <section className="py-24 md:py-32 px-6 relative overflow-hidden bg-[#2F2430]">
+    <section className="section-padding relative overflow-hidden bg-[#2F2430]">
       {/* Radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(233,165,179,0.12),transparent)]" />
 
       {/* Decorative rose rings */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-[#E9A5B3] opacity-5" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-[#E9A5B3] opacity-3" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-[#E9A5B3] opacity-5" aria-hidden="true" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-[#E9A5B3] opacity-3" aria-hidden="true" />
 
-      <div className="max-w-4xl mx-auto relative z-10 text-center">
+      <div className="max-w-4xl mx-auto relative z-10 text-center px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -55,7 +55,7 @@ export function CountdownSection() {
             </p>
           </motion.div>
         ) : (
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12">
             <CountdownCard value={days} label="Days" delay={0} />
             <CountdownCard value={hours} label="Hours" delay={0.1} />
             <CountdownCard value={minutes} label="Minutes" delay={0.2} />
@@ -68,7 +68,7 @@ export function CountdownSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-12 font-cormorant text-xl md:text-2xl text-[#72646A] italic"
+          className="mt-16 font-cormorant text-xl md:text-2xl text-[#72646A] italic max-readable-wide"
         >
           "Every love story is beautiful, but ours is my favourite."
         </motion.p>

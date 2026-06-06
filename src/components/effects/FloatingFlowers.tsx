@@ -1,6 +1,14 @@
 import { motion } from 'framer-motion';
 
-const flowers = [
+interface Flower {
+  top: string;
+  left?: string;
+  right?: string;
+  size: number;
+  delay: number;
+}
+
+const flowers: Flower[] = [
   { top: '10%', left: '3%', size: 60, delay: 0 },
   { top: '25%', right: '2%', size: 50, delay: 1.5 },
   { top: '50%', left: '1%', size: 40, delay: 3 },
@@ -37,7 +45,7 @@ export function FloatingFlowers() {
         <motion.div
           key={i}
           className="absolute"
-          style={{ top: f.top, left: (f as any).left, right: (f as any).right }}
+          style={{ top: f.top, left: f.left as string | undefined, right: f.right as string | undefined }}
           animate={{
             y: [0, -20, 0, 10, 0],
             rotate: [0, 5, -5, 3, 0],

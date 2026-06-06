@@ -6,8 +6,8 @@ import { FAMILY } from '../data/weddingData';
 
 export function FamilySection() {
   return (
-    <section className="py-24 md:py-32 px-6 bg-[#FFF0F3] relative overflow-hidden">
-      <div className="max-w-4xl mx-auto">
+    <section className="section-padding bg-[#FFF0F3] relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
           eyebrow="With Love"
           title="Our"
@@ -15,7 +15,7 @@ export function FamilySection() {
           subtitle="Two families, one beautiful union — forever joined by love"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {FAMILY.map((side, sideIdx) => (
             <GlassCard key={side.side} delay={sideIdx * 0.15}>
               {/* Header */}
@@ -68,7 +68,7 @@ export function FamilySection() {
           <blockquote className="font-cormorant text-2xl md:text-3xl text-[#72646A] italic max-w-2xl mx-auto">
             "Family is not an important thing, it's everything."
           </blockquote>
-          <div className="flex justify-center items-center gap-2 mt-4">
+          <div className="flex justify-center items-center gap-2 mt-4" aria-hidden="true">
             <Heart size={12} className="text-[#E9A5B3] fill-[#E9A5B3]" />
             <Heart size={16} className="text-[#E9A5B3] fill-[#E9A5B3]" />
             <Heart size={12} className="text-[#E9A5B3] fill-[#E9A5B3]" />
