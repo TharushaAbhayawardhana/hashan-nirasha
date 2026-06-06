@@ -52,9 +52,9 @@ export const galleryImages: GalleryImage[] = [
   },
   {
     id: 7,
-    src: 'https://images.unsplash.com/photo-1478146059778-26b7d7c1a628?w=1200&q=85&fit=crop&crop=center',
-    alt: 'Rose bouquet',
-    caption: 'A thousand roses',
+    src: 'https://images.pexels.com/photos/21928760/pexels-photo-21928760.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    alt: 'White rose bridal bouquet',
+    caption: 'Forever Begins Here',
     span: 'tall',
   },
   {
