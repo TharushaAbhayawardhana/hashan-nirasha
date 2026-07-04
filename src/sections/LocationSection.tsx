@@ -18,7 +18,7 @@ export function LocationSection() {
           eyebrow="Find Us"
           title="The"
           titleItalic="Venue"
-          subtitle="Come find us at Diendra Bolgoda — a beautiful venue for our special day"
+          subtitle="Come find us at Deandra Bolgoda — a beautiful venue for our special day"
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -38,7 +38,7 @@ export function LocationSection() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
-              title="Diendra Bolgoda"
+              title="Deandra Bolgoda"
             />
             <div className="absolute inset-0 rounded-3xl border-2 border-[#E9A5B3] opacity-0 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
           </motion.div>

@@ -7,9 +7,9 @@ export const COUPLE = {
 };
 
 export const VENUE = {
-  name: 'Diendra Bolgoda',
+  name: 'Deandra Bolgoda',
   address: 'Bolgoda, Sri Lanka',
-  mapUrl: 'https://maps.google.com/?q=Diendra+Bolgoda',
+  mapUrl: 'https://maps.google.com/?q=Deandra+Bolgoda',
   ceremony: {
     time: '10:55 AM',
     location: 'Poruwa Ceremony Hall',

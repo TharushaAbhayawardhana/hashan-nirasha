@@ -10,10 +10,10 @@ export interface TimelineEvent {
 export const loveStoryTimeline: TimelineEvent[] = [
   {
     id: 1,
-    date: '2015',
+    date: '2014',
     title: 'First Glance',
     description:
-      'It was 2015 at Central College Piliyandala. In the hallways of our school, Hashan first saw Nirasha \u2014 and something clicked. Little did we know, this was the beginning of a journey that would last a lifetime.',
+      'It was 2014 at Central College Piliyandala. In the hallways of our school, Hashan first saw Nirasha \u2014 and something clicked. Little did we know, this was the beginning of a journey that would last a lifetime.',
     emoji: '\u2728',
     icon: 'sparkles',
   },
@@ -49,14 +49,6 @@ export const loveStoryTimeline: TimelineEvent[] = [
 export const weddingDayTimeline: TimelineEvent[] = [
   {
     id: 1,
-    date: '9:40 AM',
-    title: 'Mangala Paradanaya',
-    description: 'Leaving the wedding home for dressing — the beginning of the most beautiful day.',
-    emoji: '💄',
-    icon: 'heart',
-  },
-  {
-    id: 2,
     date: '10:20 AM',
     title: 'Poruwa Blessing',
     description: 'Auspicious preparatory rite — poruwa-setting blessing to start the ceremony with blessings.',
@@ -64,7 +56,7 @@ export const weddingDayTimeline: TimelineEvent[] = [
     icon: 'sparkles',
   },
   {
-    id: 3,
+    id: 2,
     date: '10:55 AM',
     title: 'Poruwa Ceremony',
     description: 'The couple ascends the poruwa as family and friends gather to witness the sacred union.',
@@ -72,7 +64,7 @@ export const weddingDayTimeline: TimelineEvent[] = [
     icon: 'heart',
   },
   {
-    id: 4,
+    id: 3,
     date: '11:06 AM',
     title: 'Marriage Registration',
     description: 'The key auspicious moment — signing the marriage register, exchanging rings & garlands.',
@@ -80,15 +72,7 @@ export const weddingDayTimeline: TimelineEvent[] = [
     icon: 'ring',
   },
   {
-    id: 5,
-    date: '11:45 AM',
-    title: 'Polgediya',
-    description: 'Breaking the coconut — a traditional ritual symbolizing prosperity and blessings.',
-    emoji: '🥥',
-    icon: 'sparkles',
-  },
-  {
-    id: 6,
+    id: 4,
     date: '12:00 PM',
     title: 'Cake & Champagne',
     description: 'Cake cutting, champagne toast, and family photos to celebrate the happy union.',
@@ -96,7 +80,7 @@ export const weddingDayTimeline: TimelineEvent[] = [
     icon: 'heart',
   },
   {
-    id: 7,
+    id: 5,
     date: '12:40 PM',
     title: 'Lunch Reception',
     description: 'Wedding feast with family and friends — bar service, DJ, and Kandyan dancing.',
@@ -104,11 +88,19 @@ export const weddingDayTimeline: TimelineEvent[] = [
     icon: 'heart',
   },
   {
-    id: 8,
-    date: '5:20 PM',
-    title: 'Homecoming',
-    description: 'Entering the new home as a married couple — a new chapter begins together.',
-    emoji: '🏠',
+    id: 6,
+    date: '2:00 PM',
+    title: 'Dancing Floor Open',
+    description: 'Time to hit the dance floor — celebrate with music, laughter, and unforgettable moves.',
+    emoji: '💃',
+    icon: 'heart',
+  },
+  {
+    id: 7,
+    date: '4:00 PM',
+    title: 'Closing Ceremony',
+    description: 'A heartfelt close to a beautiful day — thank you all for being part of our journey.',
+    emoji: '🌅',
     icon: 'heart',
   },
 ];

@@ -74,7 +74,7 @@ export function WeddingDetailsSection() {
             </div>
             <p className="font-inter text-sm md:text-base text-[#72646A] leading-relaxed max-readable">
               Join us for a magical day filled with love, laughter, and beautiful memories at
-              Diendra Bolgoda. We look forward to celebrating this special moment with our
+              Deandra Bolgoda. We look forward to celebrating this special moment with our
               closest family and friends.
             </p>
           </div>

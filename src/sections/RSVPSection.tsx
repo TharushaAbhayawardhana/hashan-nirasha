@@ -3,15 +3,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, CheckCircle, User, Mail, Phone, Users, MessageSquare, ChevronDown, Sparkles } from 'lucide-react';
+import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles, Download } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { addRSVPEntry, downloadExcel, getEntryCount } from '../services/excelService';
 
 const rsvpSchema = z.object({
   name: z.string().min(2, 'Please enter your full name'),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().optional(),
   attendance: z.string().min(1, 'Please select your attendance'),
-  guests: z.string().min(1, 'Please select number of guests'),
   dietary: z.string().optional(),
   message: z.string().optional(),
 });
@@ -127,7 +127,7 @@ export function RSVPSection() {
 
   const onSubmit = async (data: RSVPForm) => {
     await new Promise((r) => setTimeout(r, 2000));
-    console.log('RSVP submitted:', data);
+    addRSVPEntry(data);
     setSubmitted(true);
   };
 
@@ -231,6 +231,26 @@ export function RSVPSection() {
                 >
                   Your RSVP has been received with love. We'll share more details as the day draws closer.
                 </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                  className="mt-6"
+                >
+                  <motion.button
+                    onClick={downloadExcel}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#E9A5B3] to-[#D9A06F] text-white font-inter text-sm tracking-widest uppercase rounded-full shadow-[0_4px_20px_rgba(233,165,179,0.35)] hover:shadow-[0_8px_30px_rgba(233,165,179,0.5)] transition-all duration-300"
+                  >
+                    <Download size={14} />
+                    Download RSVP Excel
+                  </motion.button>
+                  <p className="font-cormorant text-sm text-[#72646A] italic mt-2">
+                    {getEntryCount()} {getEntryCount() === 1 ? 'response' : 'responses'} recorded
+                  </p>
+                </motion.div>
 
                 <RoseDivider />
 
@@ -338,21 +358,6 @@ export function RSVPSection() {
                       ))}
                     </div>
                   </InputField>
-
-                  <div className="mt-6">
-                    <InputField label="Number of Guests" error={errors.guests?.message} icon={<Users size={12} />}>
-                      <div className="relative">
-                        <select {...register('guests')} className={`${inputClass} appearance-none pr-10`}>
-                          <option value="">Select number of guests</option>
-                          <option value="1">Just me (1)</option>
-                          <option value="2">2 guests</option>
-                          <option value="3">3 guests</option>
-                          <option value="4">4 guests</option>
-                        </select>
-                        <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#72646A] pointer-events-none" />
-                      </div>
-                    </InputField>
-                  </div>
                 </div>
 
                 {/* Rose Divider */}
