@@ -6,7 +6,6 @@ import { WeddingDetailsSection } from '../sections/WeddingDetailsSection';
 import { EventTimelineSection } from '../sections/EventTimelineSection';
 import { FamilySection } from '../sections/FamilySection';
 import { RSVPSection } from '../sections/RSVPSection';
-import { GiftSection } from '../sections/GiftSection';
 import { LocationSection } from '../sections/LocationSection';
 import { ThankYouSection } from '../sections/ThankYouSection';
 
@@ -21,7 +20,6 @@ export function Home() {
       <EventTimelineSection />
       <FamilySection />
       <RSVPSection />
-      <GiftSection />
       <LocationSection />
       <ThankYouSection />
     </main>

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Clock, MapPin, Calendar, Heart, Users, Music } from 'lucide-react';
+import { Clock, MapPin, Calendar, Heart } from 'lucide-react';
 import { SectionTitle } from '../components/ui/SectionTitle';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
@@ -8,23 +8,23 @@ import { VENUE } from '../data/weddingData';
 const details = [
   {
     icon: <Clock size={24} />,
-    title: 'Ceremony',
+    title: 'Poruwa Ceremony',
     time: VENUE.ceremony.time,
     description: VENUE.ceremony.location,
     color: '#E9A5B3',
   },
   {
-    icon: <Users size={24} />,
-    title: 'Reception',
-    time: VENUE.reception.time,
-    description: VENUE.reception.location,
+    icon: <Clock size={24} />,
+    title: 'Registration',
+    time: '11:06 AM',
+    description: 'Rings & Garlands Exchange',
     color: '#D9A06F',
   },
   {
-    icon: <Music size={24} />,
-    title: 'Celebration',
-    time: '9:00 PM',
-    description: 'Dance Floor Opens',
+    icon: <Clock size={24} />,
+    title: 'Reception',
+    time: VENUE.reception.time,
+    description: VENUE.reception.location,
     color: '#C8748A',
   },
 ];
@@ -73,9 +73,9 @@ export function WeddingDetailsSection() {
               </span>
             </div>
             <p className="font-inter text-sm md:text-base text-[#72646A] leading-relaxed max-readable">
-              Join us for a magical day filled with love, laughter, and beautiful memories at one of
-              Sri Lanka's most stunning wedding venues. Dress code is formal attire in soft, muted
-              colours — please avoid wearing white.
+              Join us for a magical day filled with love, laughter, and beautiful memories at
+              Diendra Bolgoda. We look forward to celebrating this special moment with our
+              closest family and friends.
             </p>
           </div>
         </motion.div>

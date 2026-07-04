@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MapPin, Navigation, Phone, Clock } from 'lucide-react';
+import { MapPin, Navigation, Clock } from 'lucide-react';
 import { SectionTitle } from '../components/ui/SectionTitle';
 import { Button } from '../components/ui/Button';
 import { VENUE } from '../data/weddingData';
@@ -8,7 +8,6 @@ const locationDetails = [
   { icon: <MapPin size={16} />, label: 'Address', value: VENUE.address },
   { icon: <Clock size={16} />, label: 'Ceremony', value: `${VENUE.ceremony.time} — ${VENUE.ceremony.location}` },
   { icon: <Clock size={16} />, label: 'Reception', value: `${VENUE.reception.time} — ${VENUE.reception.location}` },
-  { icon: <Phone size={16} />, label: 'Enquiries', value: '+94 11 234 5678' },
 ];
 
 export function LocationSection() {
@@ -19,11 +18,11 @@ export function LocationSection() {
           eyebrow="Find Us"
           title="The"
           titleItalic="Venue"
-          subtitle="Come find us at one of Sri Lanka's most breathtaking wedding venues"
+          subtitle="Come find us at Diendra Bolgoda — a beautiful venue for our special day"
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Map placeholder (styled) */}
+          {/* Google Maps Embed */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -31,30 +30,17 @@ export function LocationSection() {
             transition={{ duration: 0.8 }}
             className="rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(233,165,179,0.2)] h-80 md:h-96 relative group"
           >
-            <div className="w-full h-full bg-gradient-to-br from-[#FFF0F3] via-[#F6E7D8] to-[#FFF0F3] flex items-center justify-center">
-              <div className="text-center">
-                <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-20 h-20 rounded-full bg-gradient-to-br from-[#E9A5B3] to-[#D9A06F] flex items-center justify-center mx-auto mb-4 shadow-[0_8px_40px_rgba(233,165,179,0.5)]"
-                >
-                  <MapPin size={28} className="text-white" />
-                </motion.div>
-                <p className="font-playfair text-2xl text-[#2F2430] font-semibold">{VENUE.name}</p>
-                <p className="font-inter text-sm text-[#72646A] mt-1">{VENUE.address}</p>
-                <Button
-                  size="sm"
-                  className="mt-4"
-                  onClick={() => window.open('https://maps.google.com', '_blank')}
-                >
-                  <Navigation size={12} />
-                  Open in Maps
-                </Button>
-              </div>
-            </div>
-
-            {/* Decorative border animation */}
-            <div className="absolute inset-0 rounded-3xl border-2 border-[#E9A5B3] opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3131.175655662817!2d79.90447907499548!3d6.808082493189453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sdeandra%20bolgoda%20google%20map!5e1!3m2!1sen!2slk!4v1783194964379!5m2!1sen!2slk"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Diendra Bolgoda"
+            />
+            <div className="absolute inset-0 rounded-3xl border-2 border-[#E9A5B3] opacity-0 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
           </motion.div>
 
           {/* Details */}
@@ -84,15 +70,17 @@ export function LocationSection() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
 
-            {/* Parking note */}
-            <div className="glass rounded-2xl p-5">
-              <p className="font-cormorant text-lg text-[#72646A] italic">
-                🚗 Complimentary valet parking available at the venue. 
-                Shuttle service from Colombo city centre will be arranged.
-              </p>
+                <div className="pt-2">
+                  <Button
+                    size="sm"
+                    onClick={() => window.open(VENUE.mapUrl, '_blank')}
+                  >
+                    <Navigation size={12} />
+                    Open in Google Maps
+                  </Button>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

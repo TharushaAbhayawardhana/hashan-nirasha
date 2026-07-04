@@ -7,16 +7,16 @@ export const COUPLE = {
 };
 
 export const VENUE = {
-  name: 'The Royal Rose Garden Estate',
-  address: '45 Blossom Lane, Colombo 07',
-  mapUrl: 'https://maps.google.com',
+  name: 'Diendra Bolgoda',
+  address: 'Bolgoda, Sri Lanka',
+  mapUrl: 'https://maps.google.com/?q=Diendra+Bolgoda',
   ceremony: {
-    time: '10:00 AM',
-    location: 'Rose Garden Pavilion',
+    time: '10:55 AM',
+    location: 'Poruwa Ceremony Hall',
   },
   reception: {
-    time: '6:00 PM',
-    location: 'Grand Ballroom',
+    time: '12:40 PM',
+    location: 'Lunch Reception',
   },
 };
 
@@ -24,17 +24,17 @@ export const FAMILY = [
   {
     side: "Groom's Family",
     members: [
-      { name: 'Mr. & Mrs. Perera', relation: "Hashan's Parents" },
-      { name: 'Sachini Perera', relation: "Sister of the Groom" },
-      { name: 'Kasun Perera', relation: "Brother of the Groom" },
+      { name: 'P.A. Priyantha', relation: 'Father of the Groom' },
+      { name: 'S.D. Anula Kanthi', relation: 'Mother of the Groom' },
+      { name: 'P.A. Omesha Dinethmi Rathnayake', relation: 'Sister of the Groom' },
     ],
   },
   {
     side: "Bride's Family",
     members: [
-      { name: 'Mr. & Mrs. Silva', relation: "Nirasha's Parents" },
-      { name: 'Dinusha Silva', relation: "Sister of the Bride" },
-      { name: 'Nuwan Silva', relation: "Brother of the Bride" },
+      { name: 'M.D. Chandrasena', relation: 'Father of the Bride' },
+      { name: 'Chamari Inosha Kodithuwakku', relation: 'Mother of the Bride' },
+      { name: 'M.D. Himasha Kithmini', relation: 'Sister of the Bride' },
     ],
   },
 ];
