@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles, Download } from 'lucide-react';
+import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { addRSVPEntry, downloadExcel, getEntryCount } from '../services/excelService';
+import { addRSVPEntry } from '../services/excelService';
 
 const rsvpSchema = z.object({
   name: z.string().min(2, 'Please enter your full name'),
@@ -231,26 +231,6 @@ export function RSVPSection() {
                 >
                   Your RSVP has been received with love. We'll share more details as the day draws closer.
                 </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 }}
-                  className="mt-6"
-                >
-                  <motion.button
-                    onClick={downloadExcel}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#E9A5B3] to-[#D9A06F] text-white font-inter text-sm tracking-widest uppercase rounded-full shadow-[0_4px_20px_rgba(233,165,179,0.35)] hover:shadow-[0_8px_30px_rgba(233,165,179,0.5)] transition-all duration-300"
-                  >
-                    <Download size={14} />
-                    Download RSVP Excel
-                  </motion.button>
-                  <p className="font-cormorant text-sm text-[#72646A] italic mt-2">
-                    {getEntryCount()} {getEntryCount() === 1 ? 'response' : 'responses'} recorded
-                  </p>
-                </motion.div>
 
                 <RoseDivider />
 

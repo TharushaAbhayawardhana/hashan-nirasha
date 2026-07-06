@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ScrollProgress } from './components/layout/ScrollProgress';
@@ -7,10 +8,10 @@ import { RosePetals } from './components/effects/RosePetals';
 import { FloatingFlowers } from './components/effects/FloatingFlowers';
 import { BackgroundParticles } from './components/effects/BackgroundParticles';
 import { Home } from './pages/Home';
+import { Admin } from './pages/Admin';
 import { Heart } from 'lucide-react';
 
 function LoadingScreen({ onDone }: { onDone: () => void }) {
-  // Keyboard support: skip loading on Enter/Space
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === 'Enter' || e.key === ' ') onDone();
@@ -110,6 +111,20 @@ function LoadingScreen({ onDone }: { onDone: () => void }) {
   );
 }
 
+function HomePage() {
+  return (
+    <>
+      <ScrollProgress />
+      <RosePetals />
+      <FloatingFlowers />
+      <BackgroundParticles />
+      <Navbar />
+      <Home />
+      <Footer />
+    </>
+  );
+}
+
 export default function App() {
   const [loading, setLoading] = useState(true);
 
@@ -122,15 +137,10 @@ export default function App() {
       </AnimatePresence>
 
       {!loading && (
-        <>
-          <ScrollProgress />
-          <RosePetals />
-          <FloatingFlowers />
-          <BackgroundParticles />
-          <Navbar />
-          <Home />
-          <Footer />
-        </>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
       )}
     </>
   );
