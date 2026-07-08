@@ -5,13 +5,13 @@ import { auth, isAdminEmail, loginWithGoogle, logout } from '../lib/firebase';
 import { subscribeParticipants, type Participant } from '../services/participantService';
 import {
   LogOut, ShieldAlert, Loader2, Search, Download, ChevronLeft, ChevronRight,
-  Users, CheckCircle, Clock, XCircle, ArrowUpDown, ArrowUp, ArrowDown, ExternalLink,
+  Users, CheckCircle, Clock, XCircle, ArrowUpDown, ArrowUp, ArrowDown, ExternalLink, FileText,
 } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend,
 } from 'recharts';
 
-type SortField = 'name' | 'email' | 'attendance' | 'side' | 'familyParticipants' | 'submittedAt';
+type SortField = 'name' | 'email' | 'attendance' | 'side' | 'hasInvitationCard' | 'familyParticipants' | 'submittedAt';
 type SortDir = 'asc' | 'desc';
 type AttendanceFilter = 'all' | 'yes' | 'no' | 'maybe';
 
@@ -134,7 +134,8 @@ export function Admin() {
     const groomSide = participants.filter((p) => p.side === 'groom').length;
     const brideSide = participants.filter((p) => p.side === 'bride').length;
     const totalFamily = participants.reduce((sum, p) => sum + (p.familyParticipants ?? 1), 0);
-    return { total, confirmed, pending, declined, groomSide, brideSide, totalFamily };
+    const invitationCards = participants.filter((p) => p.hasInvitationCard).length;
+    return { total, confirmed, pending, declined, groomSide, brideSide, totalFamily, invitationCards };
   }, [participants]);
 
   const processed = useMemo(() => {
@@ -150,7 +151,8 @@ export function Admin() {
         (p) =>
           p.name.toLowerCase().includes(q) ||
           (p.email ?? '').toLowerCase().includes(q) ||
-          p.side.toLowerCase().includes(q),
+          p.side.toLowerCase().includes(q) ||
+          (p.hasInvitationCard ? 'yes' : 'no').includes(q),
       );
     }
 
@@ -168,6 +170,9 @@ export function Admin() {
           break;
         case 'side':
           cmp = a.side.localeCompare(b.side);
+          break;
+        case 'hasInvitationCard':
+          cmp = Number(a.hasInvitationCard) - Number(b.hasInvitationCard);
           break;
         case 'familyParticipants':
           cmp = (a.familyParticipants ?? 1) - (b.familyParticipants ?? 1);
@@ -215,7 +220,7 @@ export function Admin() {
   ], [stats]);
 
   const exportCSV = useCallback(() => {
-    const headers = ['Name', 'Email', 'Phone', 'Attendance', 'Side', 'Family Participants', 'Dietary', 'Message', 'Submitted At'];
+    const headers = ['Name', 'Email', 'Phone', 'Attendance', 'Side', 'Family Participants', 'Invitation Card', 'Dietary', 'Message', 'Submitted At'];
     const rows = participants.map((p) => [
       p.name,
       p.email || '-',
@@ -223,6 +228,7 @@ export function Admin() {
       p.attendance,
       p.side === 'groom' ? "Groom's Side" : p.side === 'bride' ? "Bride's Side" : p.side,
       String(p.familyParticipants ?? 1),
+      p.hasInvitationCard ? 'Yes' : 'No',
       p.dietary || '-',
       p.message || '-',
       formatDate(p.submittedAt),
@@ -354,6 +360,7 @@ export function Admin() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <StatCard icon={<Users size={18} />} label="Total Family Participants" value={stats.totalFamily} color="#2F2430" />
+          <StatCard icon={<FileText size={18} />} label="Invitation Cards Issued" value={stats.invitationCards} color="#E9A5B3" />
         </div>
 
         {chartData.length > 0 && (
@@ -518,6 +525,7 @@ export function Admin() {
                         <SortTh field="attendance" label="Attendance" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                         <SortTh field="side" label="Side" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                         <SortTh field="familyParticipants" label="Family" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                        <SortTh field="hasInvitationCard" label="Invitation Card" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                         <th className="font-inter text-[11px] tracking-[0.1em] uppercase text-[#72646A] py-3 px-3 text-left whitespace-nowrap hidden lg:table-cell">Dietary</th>
                         <th className="font-inter text-[11px] tracking-[0.1em] uppercase text-[#72646A] py-3 px-3 text-left whitespace-nowrap hidden lg:table-cell">Message</th>
                         <SortTh field="submittedAt" label="Date" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
@@ -549,6 +557,13 @@ export function Admin() {
                             </span>
                           </td>
                           <td className="py-3 px-3 font-inter text-sm text-[#2F2430] font-semibold tabular-nums whitespace-nowrap">{p.familyParticipants ?? 1}</td>
+                          <td className="py-3 px-3 whitespace-nowrap">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-inter text-[11px] font-medium ${
+                              p.hasInvitationCard ? 'bg-[#E9A5B3]/20 text-[#C8748A]' : 'bg-[#72646A]/10 text-[#72646A]'
+                            }`}>
+                              {p.hasInvitationCard ? 'Yes' : 'No'}
+                            </span>
+                          </td>
                           <td className="py-3 px-3 font-inter text-sm text-[#72646A] max-w-[160px] truncate hidden lg:table-cell">{p.dietary || '-'}</td>
                           <td className="py-3 px-3 font-inter text-sm text-[#72646A] max-w-[200px] truncate hidden lg:table-cell">{p.message || '-'}</td>
                           <td className="py-3 px-3 font-inter text-sm text-[#72646A] whitespace-nowrap">{formatDate(p.submittedAt)}</td>

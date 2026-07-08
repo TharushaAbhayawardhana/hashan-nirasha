@@ -7,6 +7,7 @@ export interface ParticipantFormData {
   phone: string;
   attendance: string;
   side: string;
+  hasInvitationCard: boolean;
   familyParticipants: number;
   dietary?: string;
   message?: string;
@@ -47,6 +48,7 @@ export function subscribeParticipants(
           phone: d.phone ?? '',
           attendance: d.attendance ?? '',
           side: d.side ?? '',
+          hasInvitationCard: d.hasInvitationCard ?? false,
           familyParticipants: d.familyParticipants ?? 1,
           dietary: d.dietary ?? '',
           message: d.message ?? '',

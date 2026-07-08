@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles, Minus, Plus, Users } from 'lucide-react';
+import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles, Minus, Plus, Users, Download } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { addParticipant } from '../services/participantService';
+import { generateInvitationPDF } from '../services/pdfService';
 
 const rsvpSchema = z.object({
   name: z.string().min(2, 'Please enter your full name'),
@@ -13,6 +14,7 @@ const rsvpSchema = z.object({
   phone: z.string().min(6, 'Please enter your phone number'),
   attendance: z.string({ message: 'Please select your attendance' }).min(1, 'Please select your attendance'),
   side: z.string({ message: 'Please select which side you are from' }).min(1, 'Please select which side you are from'),
+  hasInvitationCard: z.string({ message: 'Please select an option' }),
   familyParticipants: z.number().int().min(1, 'At least 1 participant required').max(99, 'Maximum 99 participants'),
   dietary: z.string().optional(),
   message: z.string().optional(),
@@ -172,20 +174,36 @@ function QuantitySelector({
 
 export function RSVPSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [submittedData, setSubmittedData] = useState<RSVPForm | null>(null);
   const [familyCount, setFamilyCount] = useState(1);
 
   const {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<RSVPForm>({
     resolver: zodResolver(rsvpSchema),
     defaultValues: { familyParticipants: 1 },
   });
 
+  const watchHasInvitationCard = useWatch({ control, name: 'hasInvitationCard' });
+
+  useEffect(() => {
+    if (watchHasInvitationCard === 'no') {
+      setValue('familyParticipants', 1);
+    }
+  }, [watchHasInvitationCard, setValue]);
+
   const onSubmit = async (data: RSVPForm) => {
-    await addParticipant(data);
+    const familyParticipants = data.hasInvitationCard === 'no' ? 1 : data.familyParticipants;
+    await addParticipant({
+      ...data,
+      hasInvitationCard: data.hasInvitationCard === 'yes',
+      familyParticipants,
+    });
+    setSubmittedData(data);
     setSubmitted(true);
   };
 
@@ -320,6 +338,27 @@ export function RSVPSection() {
                     </motion.div>
                   ))}
                 </motion.div>
+
+                {submittedData && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.0 }}
+                    className="mt-8"
+                  >
+                    <button
+                      onClick={() => generateInvitationPDF({
+                        name: submittedData.name,
+                        hasInvitationCard: submittedData.hasInvitationCard === 'yes',
+                        familyParticipants: submittedData.familyParticipants,
+                      })}
+                      className="w-full h-12 bg-gradient-to-r from-[#D9A06F] to-[#E9A5B3] text-white font-inter text-sm tracking-widest uppercase rounded-full shadow-[0_8px_30px_rgba(233,165,179,0.35)] hover:shadow-[0_12px_45px_rgba(233,165,179,0.5)] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer"
+                    >
+                      <Download size={16} />
+                      <span>Download Your Invitation (PDF)</span>
+                    </button>
+                  </motion.div>
+                )}
               </motion.div>
             ) : (
               <motion.form
@@ -420,14 +459,52 @@ export function RSVPSection() {
                   </div>
 
                   <div className="mt-8">
-                    <InputField label="Number of Participants from Your Family" error={errors.familyParticipants?.message} icon={<Users size={12} />} required>
-                      <QuantitySelector
-                        value={familyCount}
-                        onChange={handleFamilyChange}
-                      />
+                    <InputField label="Did you receive a printed invitation card?" error={errors.hasInvitationCard?.message} icon={<Mail size={12} />} required>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {[
+                          { value: 'yes', label: 'Yes, I received one' },
+                          { value: 'no', label: 'No, I did not' },
+                        ].map((opt) => (
+                          <label key={opt.value} className="cursor-pointer group">
+                            <input
+                              {...register('hasInvitationCard')}
+                              type="radio"
+                              value={opt.value}
+                              className="sr-only peer"
+                            />
+                            <div className="relative h-14 flex items-center justify-center px-4 rounded-2xl border border-[#E9A5B3]/25 bg-white/50 text-sm font-inter text-[#72646A] peer-checked:bg-gradient-to-r peer-checked:from-[#D9A06F] peer-checked:to-[#E9A5B3] peer-checked:text-white peer-checked:border-transparent peer-checked:shadow-[0_4px_20px_rgba(233,165,179,0.35)] hover:border-[#E9A5B3]/60 transition-all duration-300 group-hover:shadow-[0_4px_15px_rgba(233,165,179,0.15)]">
+                              {opt.label}
+                            </div>
+                          </label>
+                        ))}
+                      </div>
                     </InputField>
-                    <input type="hidden" {...register('familyParticipants', { valueAsNumber: true })} />
                   </div>
+
+                  {watchHasInvitationCard === 'yes' && (
+                    <div className="mt-8">
+                      <InputField label="Number of Participants" error={errors.familyParticipants?.message} icon={<Users size={12} />} required>
+                        <p className="font-inter text-xs text-[#72646A] mb-3 italic">
+                          How many people are listed on your printed invitation card?
+                        </p>
+                        <QuantitySelector
+                          value={familyCount}
+                          onChange={handleFamilyChange}
+                        />
+                      </InputField>
+                      <input type="hidden" {...register('familyParticipants', { valueAsNumber: true })} />
+                    </div>
+                  )}
+
+                  {watchHasInvitationCard === 'no' && (
+                    <div className="mt-8">
+                      <InputField label="Number of Participants" icon={<Users size={12} />}>
+                        <div className="h-14 flex items-center px-5 rounded-2xl border border-[#E9A5B3]/25 bg-white/50 font-inter text-[15px] text-[#72646A]">
+                          This RSVP is for you as an individual guest
+                        </div>
+                      </InputField>
+                    </div>
+                  )}
                 </div>
 
                 {/* Rose Divider */}
