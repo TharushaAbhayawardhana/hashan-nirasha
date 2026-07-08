@@ -3,15 +3,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles } from 'lucide-react';
+import { Heart, CheckCircle, User, Mail, Phone, MessageSquare, Sparkles, Minus, Plus, Users } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { addRSVPEntry } from '../services/excelService';
+import { addParticipant } from '../services/participantService';
 
 const rsvpSchema = z.object({
   name: z.string().min(2, 'Please enter your full name'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().optional(),
-  attendance: z.string().min(1, 'Please select your attendance'),
+  email: z.string().email('Please enter a valid email address').optional().or(z.literal('')),
+  phone: z.string().min(6, 'Please enter your phone number'),
+  attendance: z.string({ message: 'Please select your attendance' }).min(1, 'Please select your attendance'),
+  side: z.string({ message: 'Please select which side you are from' }).min(1, 'Please select which side you are from'),
+  familyParticipants: z.number().int().min(1, 'At least 1 participant required').max(99, 'Maximum 99 participants'),
   dietary: z.string().optional(),
   message: z.string().optional(),
 });
@@ -22,11 +24,13 @@ function InputField({
   label,
   error,
   icon,
+  required,
   children,
 }: {
   label: string;
   error?: string;
   icon: ReactNode;
+  required?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -34,6 +38,7 @@ function InputField({
       <label className="flex items-center gap-2.5 font-inter text-xs tracking-[0.15em] uppercase text-[#72646A]">
         <span className="text-[#E9A5B3]" aria-hidden="true">{icon}</span>
         {label}
+        {required && <span className="text-[#C8748A] ml-0.5">*</span>}
       </label>
       {children}
       {error && (
@@ -114,31 +119,87 @@ function GroupHeader({ icon, title }: { icon: ReactNode; title: string }) {
   );
 }
 
+function QuantitySelector({
+  value,
+  onChange,
+  error,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+  error?: string;
+}) {
+  const dec = () => onChange(Math.max(1, value - 1));
+  const inc = () => onChange(Math.min(99, value + 1));
+
+  return (
+    <div>
+      <div className="flex items-center gap-0">
+        <button
+          type="button"
+          onClick={dec}
+          disabled={value <= 1}
+          className="w-14 h-14 flex items-center justify-center rounded-l-2xl border border-[#E9A5B3]/25 bg-white/70 text-[#72646A] hover:bg-[#E9A5B3]/10 hover:border-[#E9A5B3]/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+          aria-label="Decrease"
+        >
+          <Minus size={18} />
+        </button>
+        <div className="w-16 h-14 flex items-center justify-center border-t border-b border-[#E9A5B3]/25 bg-white/70 font-inter text-[17px] font-medium text-[#2F2430] select-none tabular-nums">
+          {value}
+        </div>
+        <button
+          type="button"
+          onClick={inc}
+          disabled={value >= 99}
+          className="w-14 h-14 flex items-center justify-center rounded-r-2xl border border-[#E9A5B3]/25 bg-white/70 text-[#72646A] hover:bg-[#E9A5B3]/10 hover:border-[#E9A5B3]/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+          aria-label="Increase"
+        >
+          <Plus size={18} />
+        </button>
+      </div>
+      {error && (
+        <motion.p
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="font-inter text-xs text-[#C8748A] pl-1 mt-2"
+          role="alert"
+        >
+          {error}
+        </motion.p>
+      )}
+    </div>
+  );
+}
+
 export function RSVPSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [familyCount, setFamilyCount] = useState(1);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RSVPForm>({
     resolver: zodResolver(rsvpSchema),
+    defaultValues: { familyParticipants: 1 },
   });
 
   const onSubmit = async (data: RSVPForm) => {
-    await new Promise((r) => setTimeout(r, 2000));
-    addRSVPEntry(data);
+    await addParticipant(data);
     setSubmitted(true);
+  };
+
+  const handleFamilyChange = (v: number) => {
+    setFamilyCount(v);
+    setValue('familyParticipants', v, { shouldValidate: true });
   };
 
   const floatingHearts = [...Array(6)];
 
   return (
     <section id="rsvp" className="section-padding relative overflow-hidden bg-[#2F2430]">
-      {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(233,165,179,0.1),transparent)]" />
 
-      {/* Floating decorative hearts */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {floatingHearts.map((_, i) => (
           <motion.div
@@ -166,7 +227,6 @@ export function RSVPSection() {
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -201,7 +261,6 @@ export function RSVPSection() {
                 transition={{ type: 'spring', stiffness: 250, damping: 25 }}
                 className="relative rounded-[32px] bg-white/90 backdrop-blur-xl border border-[#E9A5B3]/20 shadow-[0_30px_80px_rgba(0,0,0,0.15)] p-10 sm:p-14 lg:p-16 text-center overflow-hidden"
               >
-                {/* Corner decorations */}
                 <CornerFlower className="absolute -top-6 -left-6 opacity-60" />
                 <CornerFlower className="absolute -bottom-6 -right-6 opacity-60 rotate-180" />
 
@@ -272,18 +331,16 @@ export function RSVPSection() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="relative rounded-[32px] bg-white/90 backdrop-blur-xl border border-[#E9A5B3]/20 shadow-[0_30px_80px_rgba(0,0,0,0.12)] p-8 sm:p-10 lg:p-12 overflow-hidden"
               >
-                {/* Corner decorations */}
                 <CornerFlower className="absolute -top-6 -left-6 opacity-40" />
                 <CornerFlower className="absolute -bottom-6 -right-6 opacity-40 rotate-180" />
 
-                {/* Inner decorative top accent */}
                 <div className="absolute top-0 left-8 right-8 h-0.5 bg-gradient-to-r from-transparent via-[#E9A5B3]/50 to-transparent rounded-full" />
 
                 {/* Guest Information */}
                 <div className="mb-10">
                   <GroupHeader icon={<User size={14} />} title="Guest Information" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
-                    <InputField label="Full Name" error={errors.name?.message} icon={<User size={12} />}>
+                    <InputField label="Full Name" error={errors.name?.message} icon={<User size={12} />} required>
                       <input
                         {...register('name')}
                         placeholder="Your full name"
@@ -300,7 +357,7 @@ export function RSVPSection() {
                     </InputField>
                   </div>
                   <div className="mt-5 md:mt-8">
-                    <InputField label="Phone Number (Optional)" icon={<Phone size={12} />}>
+                    <InputField label="Phone Number" error={errors.phone?.message} icon={<Phone size={12} />} required>
                       <input
                         {...register('phone')}
                         type="tel"
@@ -314,10 +371,10 @@ export function RSVPSection() {
                 {/* Rose Divider */}
                 <RoseDivider />
 
-                {/* Attendance */}
+                {/* Attendance & Side / Family */}
                 <div className="mb-10">
                   <GroupHeader icon={<Heart size={14} />} title="Attendance" />
-                  <InputField label="Will you attend?" error={errors.attendance?.message} icon={<Heart size={12} />}>
+                  <InputField label="Will you attend?" error={errors.attendance?.message} icon={<Heart size={12} />} required>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
                         { value: 'yes', label: 'Joyfully Accept' },
@@ -338,6 +395,39 @@ export function RSVPSection() {
                       ))}
                     </div>
                   </InputField>
+
+                  <div className="mt-8">
+                    <InputField label="Which side are you from?" error={errors.side?.message} icon={<Users size={12} />} required>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {[
+                          { value: 'groom', label: "Groom's Side" },
+                          { value: 'bride', label: "Bride's Side" },
+                        ].map((opt) => (
+                          <label key={opt.value} className="cursor-pointer group">
+                            <input
+                              {...register('side')}
+                              type="radio"
+                              value={opt.value}
+                              className="sr-only peer"
+                            />
+                            <div className="relative h-14 flex items-center justify-center px-4 rounded-2xl border border-[#E9A5B3]/25 bg-white/50 text-sm font-inter text-[#72646A] peer-checked:bg-gradient-to-r peer-checked:from-[#D9A06F] peer-checked:to-[#E9A5B3] peer-checked:text-white peer-checked:border-transparent peer-checked:shadow-[0_4px_20px_rgba(233,165,179,0.35)] hover:border-[#E9A5B3]/60 transition-all duration-300 group-hover:shadow-[0_4px_15px_rgba(233,165,179,0.15)]">
+                              {opt.label}
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </InputField>
+                  </div>
+
+                  <div className="mt-8">
+                    <InputField label="Number of Participants from Your Family" error={errors.familyParticipants?.message} icon={<Users size={12} />} required>
+                      <QuantitySelector
+                        value={familyCount}
+                        onChange={handleFamilyChange}
+                      />
+                    </InputField>
+                    <input type="hidden" {...register('familyParticipants', { valueAsNumber: true })} />
+                  </div>
                 </div>
 
                 {/* Rose Divider */}
@@ -373,7 +463,6 @@ export function RSVPSection() {
                   whileTap={isSubmitting ? {} : { scale: 0.98 }}
                   className="relative w-full h-14 bg-gradient-to-r from-[#E9A5B3] to-[#D9A06F] text-white font-inter text-sm tracking-widest uppercase rounded-full shadow-[0_8px_30px_rgba(233,165,179,0.35)] hover:shadow-[0_12px_45px_rgba(233,165,179,0.5)] transition-shadow duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 overflow-hidden group"
                 >
-                  {/* Shimmer overlay */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
                     animate={{ x: ['-100%', '100%'] }}

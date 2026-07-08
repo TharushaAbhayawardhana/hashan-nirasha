@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCf3h3D2IHnH8WRoYglgGxs1aJ932NB-QY',
@@ -13,11 +14,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 const ADMIN_EMAILS = [
   'tharusharandima1@gmail.com',
   'kavindacc@gmail.com',
   'hashanrathnayake00@gmail.com',
+  'naveenhettiwaththa@gmail.com',
+  'randimaabhayawardhana@gmail.com',
 ];
 
 export function isAdminEmail(email: string | null): boolean {
