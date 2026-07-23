@@ -282,9 +282,7 @@ export function RSVPSection() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ type: 'spring', stiffness: 250, damping: 25 }}
-                onAnimationComplete={(def) => {
-                  if (def.opacity === 1) scrollToSuccess();
-                }}
+                onAnimationComplete={() => scrollToSuccess()}
                 ref={successRef}
                 className="relative rounded-[32px] bg-white/90 backdrop-blur-xl border border-[#E9A5B3]/20 shadow-[0_30px_80px_rgba(0,0,0,0.15)] p-10 sm:p-14 lg:p-16 text-center overflow-hidden"
               >
